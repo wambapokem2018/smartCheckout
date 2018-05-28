@@ -119,12 +119,6 @@
                 android:layout_alignRight="@+id/off"
                 android:layout_alignEnd="@+id/off" />
 
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-
         </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

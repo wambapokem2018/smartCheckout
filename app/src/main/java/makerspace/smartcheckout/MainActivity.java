@@ -303,8 +303,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendInformation(View view) {
-        if(mConnectedThread != null) //First check to make sure thread created
+        if(mConnectedThread != null) { //First check to make sure thread created
+            Log.d(TAG, "Message send to: " + mConnectedThread.getName() + " " + mConnectedThread.getId());
             mConnectedThread.write("1");
+        } else{
+            Log.d(TAG, "Nothing to send!");
+        }
     }
 
     private class ConnectedThread extends Thread {
@@ -353,12 +357,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /* Call this from the main activity to send data to the remote device */
-        public void write(String input) {
+        public void write(String message) {
+            Log.d(TAG, "...Data to send: " + message + "...");
+            byte[] msgBuffer = message.getBytes();
+            try {
+                mmOutStream.write(msgBuffer);
+            } catch (IOException e) {
+                Log.d(TAG, "...Error data send: " + e.getMessage() + "...");
+            }
+        }
+        /*public void write(String input) {
             byte[] bytes = input.getBytes();           //converts entered String into bytes
             try {
                 mmOutStream.write(bytes);
             } catch (IOException e) { }
-        }
+        }*/
 
         /* Call this from the main activity to shutdown the connection */
         public void cancel() {
