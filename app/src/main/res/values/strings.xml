@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SmartCheckout</string>
+    <string name="send0">Send 0</string>
+    <string name="send1">Send 1</string>
 </resources>
