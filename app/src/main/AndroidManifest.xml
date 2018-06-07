@@ -42,6 +42,10 @@
             android:label="Return">
 
         </activity>
+        <activity android:name=".Bluetooth"
+            android:label="Bluetooth">
+
+        </activity>
     </application>
 
 </manifest>

@@ -7,196 +7,76 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:srcCompat="@drawable/makerspace"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="111dp" />
-
-    <TextView
-        android:layout_width="500dp"
-        android:layout_height="50dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Welcome to smartcheckouts"
-        android:id="@+id/textView2" />
-
-
-
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SEND 1"
-                android:id="@+id/buttonLED"
-                android:layout_marginTop="10dp"
-                android:checked="false"
-                android:layout_alignLeft="@+id/bluetoothStatus"
-                android:layout_alignStart="@+id/bluetoothStatus"
-                android:scaleX="1.7"
-                android:scaleY="1.7"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"
-                android:onClick="sendInformation"/>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:text="RX:"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.9"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="&lt;Read Buffer>"
-                    android:id="@+id/readBuffer"
-                    android:layout_centerHorizontal="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:text="Status:"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.9"
-
-                    android:text="&lt;Bluetooth Status>"
-                    android:id="@+id/bluetoothStatus"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignTop="@+id/checkboxLED1" />
-            </LinearLayout>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bluetooth ON"
-                android:id="@+id/scan"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/off"
-                android:layout_toLeftOf="@+id/off" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bluetooth OFF"
-                android:id="@+id/off"
-                android:layout_alignBottom="@+id/scan"
-                android:layout_toEndOf="@+id/PairedBtn"
-                android:layout_toRightOf="@+id/PairedBtn" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Show paired Devices"
-                android:id="@+id/PairedBtn"
-                android:layout_below="@+id/scan"
-                android:layout_toStartOf="@+id/discover"
-                android:layout_toLeftOf="@+id/discover" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Discover New Devices"
-                android:id="@+id/discover"
-                android:layout_below="@+id/off"
-                android:layout_toRightOf="@+id/checkboxLED1"
-                android:layout_toEndOf="@+id/checkboxLED1" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Log into Database"
-                android:id="@+id/btnLogin"
-                android:layout_below="@+id/discover"
-                android:layout_toStartOf="@+id/discover"
-                android:layout_toLeftOf="@+id/discover"
-                android:onClick="loginFunction"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:ems="10"
-                android:id="@+id/etUsername"
-                android:layout_below="@+id/btnLogin"
-                android:layout_toStartOf="@+id/discover"
-                android:layout_toLeftOf="@+id/discover"/>
-
-            <ListView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/devicesListView"
-                android:choiceMode="singleChoice"
-                android:layout_below="@+id/PairedBtn"
-                android:layout_alignRight="@+id/off"
-                android:layout_alignEnd="@+id/off" />
-
-        </LinearLayout>
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_height="wrap_content"
-        android:text="Please sign in your makerspace card" />
-
-    <!--
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:id="@+id/etUsername" />
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login" />
-            -->
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/back"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="111dp" />
+        android:text="Please scan your box"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:layout_editor_absoluteX="147dp"
+        tools:layout_editor_absoluteY="155dp" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/logout"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        app:srcCompat="@mipmap/ic_launcher"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="111dp" />
+        tools:layout_editor_absoluteY="15dp" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/etUsername"
+        android:layout_below="@+id/ic_launcher"
+        android:layout_toStartOf="@+id/discover"
+        android:layout_toLeftOf="@+id/discover"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log into Database"
+        android:id="@+id/btnLogin"
+        android:layout_below="@+id/etUsername"
+        android:layout_toStartOf="@+id/discover"
+        android:layout_toLeftOf="@+id/discover"
+        android:onClick="loginFunction" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change to Bluetooth Screen"
+        android:id="@+id/bluetooth"
+        android:layout_below="@+id/btnLogin"
+        android:layout_toStartOf="@+id/discover"
+        android:layout_toLeftOf="@+id/discover"
+        android:onClick="unwindBluetooth" />
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="75px"
+            android:layout_height="75px"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/back_state" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="75px"
+            android:layout_height="75px"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/logout_state"/>
+
+
+    </RelativeLayout>
 
 </LinearLayout>
