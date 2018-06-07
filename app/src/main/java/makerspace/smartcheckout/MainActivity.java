@@ -1,5 +1,6 @@
 package makerspace.smartcheckout;
 
+
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -33,8 +34,24 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.UUID;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.kosalgeek.genasync12.AsyncResponse;
+import com.kosalgeek.genasync12.PostResponseAsyncTask;
+
+import java.util.HashMap;
+
+
+public class MainActivity extends AppCompatActivity implements AsyncResponse {
+
+    EditText etUsername, etPassword;
+    Button btnLogin;
 
     // GUI Components
     private TextView mBluetoothStatus;
@@ -68,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+<<<<<<< HEAD
         //TODO: optimize layout cause only Landscape Orientation should be allowed
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -379,5 +397,47 @@ public class MainActivity extends AppCompatActivity {
                 mmSocket.close();
             } catch (IOException e) { }
         }
+=======
+        etUsername = (EditText)findViewById(R.id.etUsername);
+
+        btnLogin = (Button)findViewById(R.id.btnLogin);
+
+      /*  btnLogin.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(new Intent(MainActivity.this, DashboardActivity.class));
+            }
+        }); **/
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                HashMap postData = new HashMap();
+                postData.put("btnLogin", "Login");
+                postData.put("mobile", "android");
+                postData.put("txtUsername", etUsername.getText().toString());
+
+
+                PostResponseAsyncTask loginTask =
+                        new PostResponseAsyncTask(MainActivity.this, postData,
+                                MainActivity.this);
+                //loginTask.execute("http://10.0.2.2/client/login.php");
+               loginTask.execute("http://10.183.50.32/client/login.php");
+            }
+        });
+    }
+
+    @Override
+    public void processFinish(String output) {
+        if(output.equals("success")){
+            Toast.makeText(this, "Login Successfully",
+                    Toast.LENGTH_LONG).show();
+
+        }else{
+            Toast.makeText(this, "Login not Successfully",
+                    Toast.LENGTH_LONG).show();
+        }
+
+>>>>>>> databank verbindung und layout für app
     }
 }
