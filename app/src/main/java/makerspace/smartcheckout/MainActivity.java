@@ -3,6 +3,7 @@ package makerspace.smartcheckout;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     EditText etUsername, etPassword;
     Button btnLogin;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +32,30 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         //TODO: optimize layout cause only Landscape Orientation should be allowed
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+        FullScreencall();
 
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        etUsername = (EditText) findViewById(R.id.etUsername);
+        //btnLogin = (Button) findViewById(R.id.btnLogin);
+        //etUsername = (EditText) findViewById(R.id.etUsername);
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FullScreencall();
+    }
+
+    public void FullScreencall() {
+        if(Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if(Build.VERSION.SDK_INT >= 19) {
+            //for new api versions.
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
     }
 
     public void loginFunction(View view) {
