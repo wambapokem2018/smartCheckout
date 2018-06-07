@@ -100,7 +100,8 @@
                 android:text="Bluetooth ON"
                 android:id="@+id/scan"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/off" />
+                android:layout_toStartOf="@+id/off"
+                android:layout_toLeftOf="@+id/off" />
 
             <Button
                 android:layout_width="match_parent"
@@ -117,7 +118,8 @@
                 android:text="Show paired Devices"
                 android:id="@+id/PairedBtn"
                 android:layout_below="@+id/scan"
-                android:layout_toStartOf="@+id/discover" />
+                android:layout_toStartOf="@+id/discover"
+                android:layout_toLeftOf="@+id/discover" />
 
             <Button
                 android:layout_width="match_parent"
@@ -127,6 +129,26 @@
                 android:layout_below="@+id/off"
                 android:layout_toRightOf="@+id/checkboxLED1"
                 android:layout_toEndOf="@+id/checkboxLED1" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log into Database"
+                android:id="@+id/btnLogin"
+                android:layout_below="@+id/discover"
+                android:layout_toStartOf="@+id/discover"
+                android:layout_toLeftOf="@+id/discover"
+                android:onClick="loginFunction"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/etUsername"
+                android:layout_below="@+id/btnLogin"
+                android:layout_toStartOf="@+id/discover"
+                android:layout_toLeftOf="@+id/discover"/>
 
             <ListView
                 android:layout_width="wrap_content"
@@ -146,19 +168,20 @@
         android:layout_height="wrap_content"
         android:text="Please sign in your makerspace card" />
 
+    <!--
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/etUsername" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/etUsername" />
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login" />
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login" />
+            -->
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="20dp"

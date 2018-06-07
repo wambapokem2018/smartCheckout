@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
         //TODO: optimize layout cause only Landscape Orientation should be allowed
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -96,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         mDiscoverBtn = (Button)findViewById(R.id.discover);
         mListPairedDevicesBtn = (Button)findViewById(R.id.PairedBtn);
         mLED1 = (Button) findViewById(R.id.buttonLED);
+
+        btnLogin = (Button)findViewById(R.id.btnLogin);
+        etUsername = (EditText)findViewById(R.id.etUsername);
 
         mBTArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         mBTAdapter = BluetoothAdapter.getDefaultAdapter(); // get a handle on the bluetooth radio
@@ -329,6 +331,22 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         }
     }
 
+    public void loginFunction(View view) {
+
+        HashMap postData = new HashMap();
+        postData.put("btnLogin", "Login");
+        postData.put("mobile", "android");
+        postData.put("txtUsername", etUsername.getText().toString());
+
+
+        PostResponseAsyncTask loginTask =
+                new PostResponseAsyncTask(MainActivity.this, postData,
+                        MainActivity.this);
+        //loginTask.execute("http://10.0.2.2/client/login.php");
+        //Kevin IP: 10.183.50.32
+        loginTask.execute("http://10.183.86.178/client/login.php");
+    }
+
     private class ConnectedThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
@@ -397,34 +415,16 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 mmSocket.close();
             } catch (IOException e) { }
         }
-=======
-        etUsername = (EditText)findViewById(R.id.etUsername);
 
-        btnLogin = (Button)findViewById(R.id.btnLogin);
+
+
+
 
       /*  btnLogin.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 startActivity(new Intent(MainActivity.this, DashboardActivity.class));
             }
         }); **/
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                HashMap postData = new HashMap();
-                postData.put("btnLogin", "Login");
-                postData.put("mobile", "android");
-                postData.put("txtUsername", etUsername.getText().toString());
-
-
-                PostResponseAsyncTask loginTask =
-                        new PostResponseAsyncTask(MainActivity.this, postData,
-                                MainActivity.this);
-                //loginTask.execute("http://10.0.2.2/client/login.php");
-               loginTask.execute("http://10.183.50.32/client/login.php");
-            }
-        });
     }
 
     @Override
@@ -438,6 +438,5 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                     Toast.LENGTH_LONG).show();
         }
 
->>>>>>> databank verbindung und layout für app
     }
 }
