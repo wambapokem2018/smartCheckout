@@ -1,24 +1,86 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
-        tools:layout_editor_absoluteX="240dp"
-        tools:layout_editor_absoluteY="41dp" />
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="21dp"
-        android:text="Your tool was successfully borrowed! "
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="158dp" />
-</android.support.constraint.ConstraintLayout>
+        android:id="@+id/welcomeText"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+
+        android:textSize="30dp"
+        android:gravity="center" />
+
+    <ImageView
+        android:id="@+id/makerspaceLogo"
+        android:layout_width="500px"
+        android:layout_height="150px"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/makerspace"
+        android:layout_below="@+id/welcomeText" />
+
+    <TextView
+        android:id="@+id/signText"
+        android:layout_width="match_parent"
+        android:layout_height="200px"
+        android:layout_below="@+id/makerspaceLogo"
+        android:text="See you next time"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+
+    <!--
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/etUsername"
+            android:layout_below="@+id/ic_launcher"
+            android:layout_toStartOf="@+id/discover"
+            android:layout_toLeftOf="@+id/discover"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log into Database"
+            android:id="@+id/btnLogin"
+            android:layout_below="@+id/etUsername"
+            android:layout_toStartOf="@+id/discover"
+            android:layout_toLeftOf="@+id/discover"
+            android:onClick="loginFunction" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change to Bluetooth Screen"
+            android:id="@+id/bluetooth"
+            android:layout_below="@+id/btnLogin"
+            android:layout_toStartOf="@+id/discover"
+            android:layout_toLeftOf="@+id/discover"
+            android:onClick="unwindBluetooth" />
+
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="75px"
+                android:layout_height="75px"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/back_state" />
+                 -->
+
+
+
+</RelativeLayout>

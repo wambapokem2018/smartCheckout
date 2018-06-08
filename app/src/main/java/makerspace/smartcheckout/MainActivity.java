@@ -21,7 +21,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     EditText etUsername, etPassword;
-    Button btnLogin;
+    Button btnLogin, button2;
 
 
     @Override
@@ -91,4 +91,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         Intent myIntent = new Intent(view.getContext(), Bluetooth.class);
         startActivityForResult(myIntent, 0);
     }
+    public void goToDashboard(View view) {
+        Intent myIntent = new Intent(view.getContext(), DashboardActivity.class);
+        startActivityForResult(myIntent, 0);
+    }
+
 }

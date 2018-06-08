@@ -85,6 +85,12 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:background="@drawable/back_state" />
+             -->
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/button2"
@@ -92,11 +98,13 @@
             android:layout_height="75px"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/logout_state"/>
+            android:text="next"
+            android:onClick="goToDashboard"/>
+
 
 
     </RelativeLayout>
 
-    -->
+
 
 </RelativeLayout>
