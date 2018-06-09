@@ -1,80 +1,116 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
 
-    <Button
-        android:id="@+id/button12"
-        android:layout_width="93dp"
-        android:layout_height="41dp"
-        android:text="logout"
-        tools:layout_editor_absoluteX="495dp"
-        tools:layout_editor_absoluteY="263dp" />
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Did you report a missing/broken tool in your Borrow Progress?"
-        tools:layout_editor_absoluteX="95dp"
-        tools:layout_editor_absoluteY="26dp" />
+        android:id="@+id/welcomeText"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:text="Did you report a missing tool?"
+        android:textSize="30dp"
+        android:gravity="center" />
 
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="354dp"
-        android:layout_height="32dp"
-        android:text="No, everything was fine"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="78dp" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="100dp"
+        android:layout_below="@id/welcomeText">
 
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="354dp"
-        android:layout_height="wrap_content"
-        android:text="Yes, but all tools were fixed/replaced by a staff"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="117dp" />
+        <CheckBox android:id="@+id/yes"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
 
-    <CheckBox
-        android:id="@+id/checkBox3"
-        android:layout_width="356dp"
-        android:layout_height="wrap_content"
-        android:text="Yes, but weren't fixed/replaced"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="161dp" />
+            android:text="Yes"
+            />
+        <CheckBox android:id="@+id/no"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="No"
+            />
+        <CheckBox android:id="@+id/my"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="No"
+            />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/clickBox"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:layout_below="@id/welcomeText"
+        android:layout_marginTop="100dp"
         android:text="Please check all your tools"
-        tools:layout_editor_absoluteX="193dp"
-        tools:layout_editor_absoluteY="193dp" />
+        android:textSize="30dp"
+        android:gravity="center" />
 
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="125dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Content are fine and complete"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="215dp" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/button8"
-        android:layout_width="141dp"
-        android:layout_height="76dp"
-        android:text="Sorry, i lost or broke some tools"
-        tools:layout_editor_absoluteX="293dp"
-        tools:layout_editor_absoluteY="219dp" />
 
-    <Button
-        android:id="@+id/button9"
-        android:layout_width="93dp"
-        android:layout_height="41dp"
-        android:text="Back"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="263dp" />
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:text="All is right"
+            android:id="@+id/btnLogin"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="80dp"
+            android:layout_toStartOf="@+id/discover"
+            android:layout_toLeftOf="@+id/discover"
 
-</android.support.constraint.ConstraintLayout>
+            />
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:text="Sorry i broke something"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="80dp"
+            android:id="@+id/bluetooth"
+            android:layout_marginTop="150dp"
+            android:layout_toStartOf="@+id/discover"
+            android:layout_toLeftOf="@+id/discover"
+            android:onClick="goToNext" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="75px"
+            android:layout_height="75px"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/back_state" />
+
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="75px"
+            android:layout_height="75px"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/logout" />
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

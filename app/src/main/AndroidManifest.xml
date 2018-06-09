@@ -42,6 +42,18 @@
             android:label="Return">
 
         </activity>
+        <activity android:name=".SuccessActivity"
+            android:label="Success">
+
+        </activity>
+        <activity android:name=".Return_MissingActivity"
+            android:label="Success">
+
+        </activity>
+        <activity android:name=".Borrow_MissingActivity"
+            android:label="Success">
+
+        </activity>
         <activity android:name=".Bluetooth"
             android:label="Bluetooth">
 

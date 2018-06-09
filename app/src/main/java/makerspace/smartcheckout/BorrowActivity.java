@@ -31,5 +31,16 @@ public class BorrowActivity extends AppCompatActivity{
 
 
     }
+    public void goToFinish(View view) {
+        Intent myIntent = new Intent(view.getContext(), SuccessActivity.class);
+        startActivityForResult(myIntent, 0);
+    }
+
+    public void goToMissing(View view) {
+        Intent myIntent = new Intent(view.getContext(), Borrow_MissingActivity.class);
+        startActivityForResult(myIntent, 0);
+    }
+
+
 
 }

@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         startActivityForResult(myIntent, 0);
     }
     public void goToDashboard(View view) {
-        Intent myIntent = new Intent(view.getContext(), DashboardActivity.class);
-        startActivityForResult(myIntent, 0);
+            Intent myIntent = new Intent(view.getContext(), DashboardActivity.class);
+            startActivityForResult(myIntent, 0);
     }
 
 }

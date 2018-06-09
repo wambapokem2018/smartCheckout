@@ -77,15 +77,16 @@
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content">
-            <!--
+
                        <Button
                            android:id="@+id/button"
                            android:layout_width="75px"
                            android:layout_height="75px"
                            android:layout_alignParentBottom="true"
                            android:layout_alignParentLeft="true"
-                           android:background="@drawable/back_state" />
-           -->
+                           android:background="@drawable/back_state"
+                           android:onClick="goToReturn"/>
+
                        <Button
                            android:id="@+id/button2"
                            android:layout_width="75px"

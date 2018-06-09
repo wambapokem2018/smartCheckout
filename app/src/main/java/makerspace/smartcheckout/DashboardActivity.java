@@ -38,6 +38,12 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
             }
         });
 
+
+    }
+    public void goToReturn(View view) {
+        Intent myIntent = new Intent(view.getContext(),
+                ReturnActivity.class);
+        startActivityForResult(myIntent, 0);
     }
 
     @Override
