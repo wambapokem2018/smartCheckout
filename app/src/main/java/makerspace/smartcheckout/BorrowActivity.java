@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class BorrowActivity extends AppCompatActivity{
 
-    Button btnLogin;
+    Button button, button2, button3, button4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,26 +21,32 @@ public class BorrowActivity extends AppCompatActivity{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 
-        btnLogin = (Button)findViewById(R.id.btnLogin);
+        button = (Button)findViewById(R.id.goToFinish);
+        button2 = (Button)findViewById(R.id.showObject);
+        button3 = (Button)findViewById(R.id.back);
+        button4 = (Button)findViewById(R.id.logout);
 
-        btnLogin.setOnClickListener(new View.OnClickListener(){
+        button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 startActivity(new Intent(BorrowActivity.this, SuccessActivity.class));
             }
         });
-
+        button2.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(new Intent(BorrowActivity.this, Borrow_MissingActivity.class));
+            }
+        });
+        button3.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(new Intent(BorrowActivity.this, DashboardActivity.class));
+            }
+        });
+        button4.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(new Intent(BorrowActivity.this, MainActivity.class));
+            }
+        });
 
     }
-    public void goToFinish(View view) {
-        Intent myIntent = new Intent(view.getContext(), SuccessActivity.class);
-        startActivityForResult(myIntent, 0);
-    }
-
-    public void goToMissing(View view) {
-        Intent myIntent = new Intent(view.getContext(), Borrow_MissingActivity.class);
-        startActivityForResult(myIntent, 0);
-    }
-
-
 
 }

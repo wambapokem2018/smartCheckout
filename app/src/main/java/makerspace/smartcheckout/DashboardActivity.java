@@ -23,7 +23,7 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
 
       //  FullScreencall();
 
-       // button = (Button)findViewById(R.id.button);
+        button = (Button)findViewById(R.id.button);
         button2 = (Button)findViewById(R.id.button2);
 
      //   button.setOnClickListener(new View.OnClickListener(){
@@ -37,13 +37,14 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                 startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
             }
         });
+        button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(new Intent(DashboardActivity.this, ReturnActivity.class));
+            }
+        });
 
 
-    }
-    public void goToReturn(View view) {
-        Intent myIntent = new Intent(view.getContext(),
-                ReturnActivity.class);
-        startActivityForResult(myIntent, 0);
+
     }
 
     @Override

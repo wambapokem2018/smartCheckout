@@ -22,26 +22,26 @@
         android:layout_marginLeft="100dp"
         android:layout_below="@id/welcomeText">
 
-        <CheckBox android:id="@+id/yes"
+        <CheckBox android:id="@+id/allFine"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
 
-            android:text="Yes"
+            android:text="No all is fine"
             />
-        <CheckBox android:id="@+id/no"
+        <CheckBox android:id="@+id/yesFixed"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:text="No"
+            android:text="Yes, but all fixed"
             />
-        <CheckBox android:id="@+id/my"
+        <CheckBox android:id="@+id/yesNoFixed"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:text="No"
+            android:text="Yes, but not fixed"
             />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/clickBox"
+        android:id="@+id/checkTools"
         android:layout_width="match_parent"
         android:layout_height="100px"
         android:layout_below="@id/welcomeText"
@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="50dp"
+        android:layout_below="@id/checkTools"
         android:orientation="horizontal">
 
 
@@ -62,9 +63,9 @@
             android:layout_width="200dp"
             android:layout_height="100dp"
             android:text="All is right"
-            android:id="@+id/btnLogin"
+            android:id="@+id/allGood"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="200dp"
             android:layout_marginLeft="80dp"
             android:layout_toStartOf="@+id/discover"
             android:layout_toLeftOf="@+id/discover"
@@ -77,11 +78,11 @@
             android:text="Sorry i broke something"
             android:layout_alignParentRight="true"
             android:layout_marginRight="80dp"
-            android:id="@+id/bluetooth"
-            android:layout_marginTop="150dp"
+            android:id="@+id/lost"
+            android:layout_marginTop="200dp"
             android:layout_toStartOf="@+id/discover"
             android:layout_toLeftOf="@+id/discover"
-            android:onClick="goToNext" />
+             />
     </RelativeLayout>
 
 
@@ -92,7 +93,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/back"
             android:layout_width="75px"
             android:layout_height="75px"
             android:layout_alignParentBottom="true"
@@ -101,7 +102,7 @@
 
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/logout"
             android:layout_width="75px"
             android:layout_height="75px"
             android:layout_alignParentBottom="true"

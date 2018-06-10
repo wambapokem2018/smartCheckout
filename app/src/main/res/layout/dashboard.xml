@@ -85,7 +85,7 @@
                            android:layout_alignParentBottom="true"
                            android:layout_alignParentLeft="true"
                            android:background="@drawable/back_state"
-                           android:onClick="goToReturn"/>
+                          />
 
                        <Button
                            android:id="@+id/button2"

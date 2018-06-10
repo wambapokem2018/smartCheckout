@@ -5,8 +5,13 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 
-public class Borrow_MissingActivity extends AppCompatActivity{
+public class Borrow_MissingActivity extends AppCompatActivity implements View.OnClickListener{
+
+             CheckBox checkBox, checkBox2;
+             Button button, button2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,10 +21,47 @@ public class Borrow_MissingActivity extends AppCompatActivity{
         //TODO: optimize layout cause only Landscape Orientation should be allowed
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+
+        checkBox = (CheckBox) findViewById(R.id.yes);
+        checkBox.setOnClickListener(this);
+
+        checkBox2 = (CheckBox) findViewById(R.id.no);
+        checkBox2.setOnClickListener(this);
+
+        button2 = (Button)findViewById(R.id.back);
+        button = (Button)findViewById(R.id.logout);
+
+        button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(new Intent(Borrow_MissingActivity.this, MainActivity.class));
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(new Intent(Borrow_MissingActivity.this, DashboardActivity.class));
+            }
+        });
+
     }
 
-    public void goTo2Finish(View view) {
-        Intent myIntent = new Intent(view.getContext(), SuccessActivity.class);
-        startActivityForResult(myIntent, 0);
+    @Override
+    public void onClick(View view) {
+
+        if (checkBox.isChecked()) {
+            checkBox2.setChecked(false);
+        }else{
+            checkBox2.setChecked(true);
+        }
+
+        if (checkBox2.isChecked()) {
+            checkBox.setChecked(false);
+        }else {
+            checkBox.setChecked(true);
+        }
+
     }
+
+
+
 }
