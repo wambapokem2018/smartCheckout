@@ -51,6 +51,7 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
     private ArrayAdapter<String> mBTArrayAdapter;
     private ListView mDevicesListView;
     private Button mLED1;
+    private TextView status;
 
     private final String TAG = MainActivity.class.getSimpleName();
     private Handler mHandler; // Our main handler that will receive callback notifications
@@ -81,6 +82,7 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
         mDiscoverBtn = (Button)findViewById(R.id.discover);
         mListPairedDevicesBtn = (Button)findViewById(R.id.PairedBtn);
         mLED1 = (Button) findViewById(R.id.buttonLED);
+        status = (TextView) findViewById(R.id.status);
 
         mBTArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         mBTAdapter = BluetoothAdapter.getDefaultAdapter(); // get a handle on the bluetooth radio
@@ -103,7 +105,21 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    mReadBuffer.setText(readMessage);
+                    //mReadBuffer.setText(readMessage);
+                    String arduinoCardInformation = filterMessage(readMessage);
+                    mReadBuffer.setText(arduinoCardInformation);
+                    //TODO: check arduinoCardInformation with all entries in DB
+                    String cardID = "D5E07B96";
+                    if(arduinoCardInformation.compareTo(cardID) == 0){
+                        //TODO: give Arduino Board access means turn on green light
+                        status.setText("TRUE");
+                        mConnectedThread.write("9"); //TODO: change into 'access' or something else
+                    } else{
+                        //TODO: deny Arduino Board access means turn on red light
+                        status.setText("FALSE");
+                        mConnectedThread.write("deny");
+                    }
+
                 }
 
                 if(msg.what == CONNECTING_STATUS){
@@ -383,4 +399,18 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
         }
     }
 
+    public String filterMessage(String message){
+
+        String completeMessage = message;
+
+        if(completeMessage.charAt(0) == 'C' && completeMessage.charAt(1) == 'a' && completeMessage.charAt(2) == 'r' && completeMessage.charAt(3) == 'd')
+            completeMessage = "" + completeMessage.charAt(7) + completeMessage.charAt(8) + //first HEX ID Part
+                    completeMessage.charAt(10) + completeMessage.charAt(11) + //second HEX ID Part
+                    completeMessage.charAt(13) + completeMessage.charAt(14) + //third HEX ID Part
+                    completeMessage.charAt(16) + completeMessage.charAt(17); //fourth HEX ID Part
+        else
+            completeMessage = "No ID found";
+
+        return completeMessage;
+    }
 }
