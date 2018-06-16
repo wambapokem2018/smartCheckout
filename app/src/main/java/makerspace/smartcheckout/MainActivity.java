@@ -87,13 +87,13 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     }
 
-    public void unwindBluetooth(View view) {
-        Intent myIntent = new Intent(view.getContext(), Bluetooth.class);
-        startActivityForResult(myIntent, 0);
-    }
     public void goToDashboard(View view) {
             Intent myIntent = new Intent(view.getContext(), DashboardActivity.class);
             startActivityForResult(myIntent, 0);
     }
 
+    public void goToAdvanceMode(View view) {
+        Intent myIntent = new Intent(view.getContext(), Bluetooth.class);
+        startActivityForResult(myIntent, 0);
+    }
 }

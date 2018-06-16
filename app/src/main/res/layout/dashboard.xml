@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:keepScreenOn="true"
 
-    tools:context=".MainActivity"
+    tools:context=".DashboardActivity"
     android:orientation="vertical">
 
     <TextView
@@ -40,6 +41,15 @@
         android:layout_below="@+id/signText"
         android:background="@drawable/hint_arrow"
         android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/buttonDB"
+        android:layout_width="200px"
+        android:layout_height="75px"
+        android:text="Log"
+        android:layout_below="@+id/hintImage"
+        android:layout_alignParentRight="true"
+        android:onClick="loginFunction"/>
     <!--
         <EditText
             android:layout_width="match_parent"
@@ -85,7 +95,7 @@
                            android:layout_alignParentBottom="true"
                            android:layout_alignParentLeft="true"
                            android:background="@drawable/back_state"
-                          />
+                           android:onClick="unwindBack" />
 
                        <Button
                            android:id="@+id/button2"
@@ -93,7 +103,8 @@
                            android:layout_height="75px"
                            android:layout_alignParentBottom="true"
                            android:layout_alignParentRight="true"
-                           android:background="@drawable/logout_state"/>
+                           android:background="@drawable/logout_state"
+                           android:onClick="logOut"/>
 
 
                    </RelativeLayout>

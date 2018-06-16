@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:keepScreenOn="true"
 
     tools:context=".MainActivity"
     android:orientation="vertical">
@@ -94,12 +95,21 @@
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="75px"
-            android:layout_height="75px"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:background="@android:color/transparent"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:text="next"
             android:onClick="goToDashboard"/>
+
+        <Button
+            android:id="@+id/advanceMode"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:background="@android:color/transparent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:onClick="goToAdvanceMode"/>
 
 
 
