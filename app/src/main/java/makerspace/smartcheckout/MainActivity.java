@@ -58,22 +58,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         }
     }
 
-    public void loginFunction(View view) {
-
-        HashMap postData = new HashMap();
-        postData.put("btnLogin", "Login");
-        postData.put("mobile", "android");
-        postData.put("txtUsername", etUsername.getText().toString());
-
-
-        PostResponseAsyncTask loginTask =
-                new PostResponseAsyncTask(MainActivity.this, postData,
-                        MainActivity.this);
-        //loginTask.execute("http://10.0.2.2/client/login.php");
-        //Kevin IP: 10.183.50.32
-        loginTask.execute("http://10.183.86.178/client/login.php");
-    }
-
     @Override
     public void processFinish(String output) {
         if(output.equals("success")){
