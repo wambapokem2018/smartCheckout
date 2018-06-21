@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -19,10 +20,16 @@ import java.util.HashMap;
 
 public class DashboardActivity extends AppCompatActivity implements AsyncResponse {
 
+    Button button, button2;
+
+    final String LOG = "DashboardActivity";
+
     private Handler mHandler;
     private final static int MESSAGE_READ = 2; // used in bluetooth handler to identify message update
     private final static int CONNECTING_STATUS = 3; // used in bluetooth handler to identify message status
-    private Bluetooth.ConnectedThread this_mConnectedThread = Bluetooth.mConnectedThread; // bluetooth background worker thread to send and receive data
+    // private Bluetooth.ConnectedThread this_mConnectedThread = Bluetooth.mConnectedThread; // bluetooth background worker thread to send and receive data
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +57,12 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                         //TODO: give Arduino Board access means turn on green light
                         //status.setText("TRUE");
                         System.out.println("Something found == TRUE");
-                        this_mConnectedThread.write("9"); //TODO: change into 'access' or something else
+                      //  this_mConnectedThread.write("9"); //TODO: change into 'access' or something else
                     } else{
                         //TODO: deny Arduino Board access means turn on red light
                         //status.setText("FALSE");
                         System.out.println("Nothing found == FALSE");
-                        this_mConnectedThread.write("deny");
+                   //     this_mConnectedThread.write("deny");
                     }
 
                 }
@@ -66,6 +73,42 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                 }
             }
         };
+
+        button = (Button)findViewById(R.id.returnbtn);
+        button2 = (Button)findViewById(R.id.borrowbtn);
+
+        button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                HashMap postData = new HashMap();
+                postData.put("btnLogin", "Login");
+                postData.put("mobile", "android");
+                postData.put("txtBoxname", "0001");
+
+
+                PostResponseAsyncTask checkBox =
+                        new PostResponseAsyncTask(DashboardActivity.this, postData,
+                                DashboardActivity.this);
+                //loginTask.execute("http://10.0.2.2/client/login.php");
+                //Kevin IP: 10.183.50.32
+                checkBox.execute("http://10.180.39.27/client/login.php");
+            }
+        });
+        button2.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                HashMap postData = new HashMap();
+                postData.put("btnLogin", "Login");
+                postData.put("mobile", "android");
+                postData.put("txtBoxname", "0011");
+
+
+                PostResponseAsyncTask checkBox =
+                        new PostResponseAsyncTask(DashboardActivity.this, postData,
+                                DashboardActivity.this);
+                //loginTask.execute("http://10.0.2.2/client/login.php");
+                //Kevin IP: 10.183.50.32
+                checkBox.execute("http://10.180.39.27/client/login.php");
+            }
+        });
     }
 
     public String filterMessage(String message){
@@ -85,22 +128,26 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
 
     public void loginFunction(View view) {
 
-        HashMap postData = new HashMap();
-        postData.put("btnLogin", "Login");
-        postData.put("mobile", "android");
-        postData.put("txtBoxname", "0001");
 
-
-        PostResponseAsyncTask checkBox =
-                new PostResponseAsyncTask(DashboardActivity.this, postData,
-                        DashboardActivity.this);
-        //loginTask.execute("http://10.0.2.2/client/login.php");
-        //Kevin IP: 10.183.50.32
-        checkBox.execute("http://192.168.178.32/client/login.php");
     }
 
     @Override
-    public void processFinish(String s) {
+
+    public void processFinish(String output) {
+        Log.d(LOG, output);
+        if(!output.equals(null)){
+            Toast.makeText(this, "Login Successfully",
+                    Toast.LENGTH_LONG).show();
+            startActivity(new Intent(DashboardActivity.this, ReturnActivity.class));
+        }
+        else{
+            Toast.makeText(this, "Login not Successfully",
+                    Toast.LENGTH_LONG).show();
+            startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
+        }
+    }
+
+    /* public void processFinish(String s) {
 
         String fullText = "";
         String successMessage = "";
@@ -120,7 +167,7 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                     Toast.LENGTH_LONG).show();
         }
     }
-
+*/
     public void FullScreencall() {
         if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
             View v = this.getWindow().getDecorView();

@@ -8,6 +8,33 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:text="Do you need the missing tool immediately?"
+        android:textSize="30dp"
+        android:gravity="center" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+
+        android:layout_below="@id/welcomeText">
+
+        <CheckBox android:id="@+id/yes"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:text="Yes"
+           />
+        <CheckBox android:id="@+id/no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/clickBox"
@@ -25,32 +52,30 @@
         android:layout_alignParentTop="true"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/makerspaceLogo3"
+        <Button
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/makerspace"
+            android:text="All is right"
+            android:id="@+id/btnLogin"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="150dp"
             android:layout_marginLeft="80dp"
             android:layout_toStartOf="@+id/discover"
-            android:layout_toLeftOf="@+id/discover" />
+            android:layout_toLeftOf="@+id/discover"
+          />
 
-        <ImageView
-            android:id="@+id/makerspaceLogo4"
+        <Button
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/makerspace"
+            android:text="Change to Bluetooth Screen"
             android:layout_alignParentRight="true"
             android:layout_marginRight="80dp"
+            android:id="@+id/bluetooth"
             android:layout_marginTop="150dp"
             android:layout_toStartOf="@+id/discover"
             android:layout_toLeftOf="@+id/discover" />
-
-
     </RelativeLayout>
+
 
 
     <RelativeLayout
@@ -74,11 +99,12 @@
             android:layout_height="75px"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/logout" />
+            android:onClick="goToDashboard"
+            android:background="@drawable/logout"
 
+            />
 
     </RelativeLayout>
-
 
 
 </RelativeLayout>

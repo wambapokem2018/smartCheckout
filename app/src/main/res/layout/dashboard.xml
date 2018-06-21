@@ -8,13 +8,6 @@
     tools:context=".DashboardActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/welcomeText"
-        android:layout_width="match_parent"
-        android:layout_height="100px"
-        android:text=""
-        android:textSize="30dp"
-        android:gravity="center" />
 
     <ImageView
         android:id="@+id/makerspaceLogo"
@@ -46,8 +39,9 @@
         android:id="@+id/buttonDB"
         android:layout_width="200px"
         android:layout_height="75px"
+        android:layout_marginRight="20dp"
         android:text="Log"
-        android:layout_below="@+id/hintImage"
+        android:layout_marginTop="220dp"
         android:layout_alignParentRight="true"
         android:onClick="loginFunction"/>
     <!--
@@ -60,13 +54,12 @@
             android:layout_below="@+id/ic_launcher"
             android:layout_toStartOf="@+id/discover"
             android:layout_toLeftOf="@+id/discover"/>
-
+   -->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Log into Database"
-            android:id="@+id/btnLogin"
-            android:layout_below="@+id/etUsername"
+            android:text="borrow"
+            android:id="@+id/borrowbtn"
             android:layout_toStartOf="@+id/discover"
             android:layout_toLeftOf="@+id/discover"
             android:onClick="loginFunction" />
@@ -74,13 +67,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change to Bluetooth Screen"
-            android:id="@+id/bluetooth"
-            android:layout_below="@+id/btnLogin"
+            android:text="return"
+            android:id="@+id/returnbtn"
+            android:layout_below="@+id/borrowbtn"
             android:layout_toStartOf="@+id/discover"
-            android:layout_toLeftOf="@+id/discover"
-            android:onClick="unwindBluetooth" />
-     -->
+            android:layout_toLeftOf="@+id/discover" />
+
 
         <RelativeLayout
             android:orientation="horizontal"

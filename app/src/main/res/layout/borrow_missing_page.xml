@@ -100,9 +100,10 @@
             android:layout_height="75px"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:onClick="goToDashboard"
             android:background="@drawable/logout"
-            />
 
+            />
 
     </RelativeLayout>
 
