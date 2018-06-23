@@ -24,12 +24,13 @@
         android:layout_below="@id/welcomeText">
 
         <CheckBox android:id="@+id/yes"
-            android:layout_width="250dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="120dp"
             android:text="Yes"
            />
         <CheckBox android:id="@+id/no"
+            android:layout_marginLeft="100dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No"

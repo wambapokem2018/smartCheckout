@@ -29,15 +29,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ReturnActivity extends AppCompatActivity implements View.OnClickListener, AsyncResponse{
+public class ReturnActivity extends AppCompatActivity implements AsyncResponse{
     Button button, button2, button3, button4;
     CheckBox checkBox, checkBox2, checkBox3;
     final String LOG = "ReturnActivity";
-    private     ArrayList<Box> boxes;
-    JSONObject json = null;
-    String str = "";
-    HttpResponse response;
-    Context context;
 
 
     @Override
@@ -50,32 +45,49 @@ public class ReturnActivity extends AppCompatActivity implements View.OnClickLis
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         checkBox = (CheckBox) findViewById(R.id.allFine);
-        checkBox.setOnClickListener(this);
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkBox2.isChecked()) {
+                    checkBox2.toggle();
+                }
+                if (checkBox3.isChecked()) {
+                    checkBox3.toggle();
+                }
+            }
+        });
         checkBox2 = (CheckBox) findViewById(R.id.yesFixed);
-        checkBox2.setOnClickListener(this);
+        checkBox2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkBox.isChecked()) {
+                    checkBox.toggle();
+                }
+                if (checkBox3.isChecked()) {
+                    checkBox3.toggle();
+                }
+            }
+        });
         checkBox3 = (CheckBox) findViewById(R.id.yesNoFixed);
-        checkBox3.setOnClickListener(this);
-
+        checkBox3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkBox.isChecked()) {
+                    checkBox.toggle();
+                }
+                if (checkBox2.isChecked()) {
+                    checkBox2.toggle();
+                }
+            }
+        });
         button = (Button)findViewById(R.id.lost);
         button2 = (Button)findViewById(R.id.allGood);
         button3 = (Button)findViewById(R.id.back);
         button4 = (Button)findViewById(R.id.logout);
 
-        HttpClient myClient = new DefaultHttpClient();
-        HttpPost myConnection = new HttpPost("http://10.180.39.27/client/box.php");
 
 
-        try {
-            response = myClient.execute(myConnection);
-            str = EntityUtils.toString(response.getEntity(), "UTF-8");
 
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Log.d(LOG, str);
 
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -100,12 +112,7 @@ public class ReturnActivity extends AppCompatActivity implements View.OnClickLis
         });
 
     }
-    @Override
-    public void onClick(View view) {
 
-
-
-    }
 
     @Override
     public void processFinish(String s) {

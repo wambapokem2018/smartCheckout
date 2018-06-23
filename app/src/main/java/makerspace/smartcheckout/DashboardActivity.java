@@ -90,7 +90,7 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                                 DashboardActivity.this);
                 //loginTask.execute("http://10.0.2.2/client/login.php");
                 //Kevin IP: 10.183.50.32
-                checkBox.execute("http://10.180.39.27/client/login.php");
+                checkBox.execute("http://10.41.17.102/client/login.php");
             }
         });
         button2.setOnClickListener(new View.OnClickListener(){
@@ -106,7 +106,7 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                                 DashboardActivity.this);
                 //loginTask.execute("http://10.0.2.2/client/login.php");
                 //Kevin IP: 10.183.50.32
-                checkBox.execute("http://10.180.39.27/client/login.php");
+                checkBox.execute("http://10.41.17.102/client/login.php");
             }
         });
     }
@@ -168,6 +168,12 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
         }
     }
 */
+
+    public void goToDashboard(View view) {
+        Intent myIntent = new Intent(view.getContext(), ReturnActivity.class);
+        startActivityForResult(myIntent, 0);
+    }
+
     public void FullScreencall() {
         if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
             View v = this.getWindow().getDecorView();

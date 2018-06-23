@@ -9,11 +9,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
-public class Borrow_MissingActivity extends AppCompatActivity implements View.OnClickListener{
+public class Borrow_MissingActivity extends AppCompatActivity{
 
-             CheckBox checkBox, checkBox2;
-             Button button, button2;
-             ImageView image1, image2;
+    CheckBox checkBox, checkBox2;
+    Button button, button2;
+    ImageView image1, image2;
 
 
 
@@ -27,10 +27,24 @@ public class Borrow_MissingActivity extends AppCompatActivity implements View.On
 
 
         checkBox = (CheckBox) findViewById(R.id.yes);
-        checkBox.setOnClickListener(this);
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkBox2.isChecked()) {
+                    checkBox2.toggle();
+                }
+            }
+        });
 
         checkBox2 = (CheckBox) findViewById(R.id.no);
-        checkBox2.setOnClickListener(this);
+        checkBox2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkBox.isChecked()) {
+                    checkBox.toggle();
+                }
+            }
+        });
 
         button2 = (Button)findViewById(R.id.back);
         button = (Button)findViewById(R.id.logout);
@@ -61,24 +75,6 @@ public class Borrow_MissingActivity extends AppCompatActivity implements View.On
         });
 
     }
-
-    @Override
-    public void onClick(View view) {
-
-        if (checkBox.isChecked()) {
-            checkBox2.setChecked(false);
-        }else{
-            checkBox2.setChecked(true);
-        }
-
-        if (checkBox2.isChecked()) {
-            checkBox.setChecked(false);
-        }else {
-            checkBox.setChecked(true);
-        }
-
-    }
-
 
 
 }
