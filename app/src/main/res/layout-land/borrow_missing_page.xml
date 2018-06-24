@@ -24,12 +24,13 @@
         android:layout_below="@id/welcomeText">
 
         <CheckBox android:id="@+id/yes"
-            android:layout_width="250dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_marginLeft="120dp"
             android:text="Yes"
            />
         <CheckBox android:id="@+id/no"
+            android:layout_marginLeft="100dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No"
@@ -52,30 +53,33 @@
         android:layout_alignParentTop="true"
         android:orientation="horizontal">
 
-        <Button
+        <ImageView
+            android:id="@+id/makerspaceLogo"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:text="All is right"
-            android:id="@+id/btnLogin"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/makerspace"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="200dp"
             android:layout_marginLeft="80dp"
             android:layout_toStartOf="@+id/discover"
-            android:layout_toLeftOf="@+id/discover"
-          />
+            android:layout_toLeftOf="@+id/discover" />
 
-        <Button
+        <ImageView
+            android:id="@+id/makerspaceLogo2"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:text="Change to Bluetooth Screen"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/makerspace"
             android:layout_alignParentRight="true"
             android:layout_marginRight="80dp"
-            android:id="@+id/bluetooth"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="200dp"
             android:layout_toStartOf="@+id/discover"
-            android:layout_toLeftOf="@+id/discover"
-            android:onClick="goTo2Finish"/>
+            android:layout_toLeftOf="@+id/discover" />
+
+
     </RelativeLayout>
+
 
 
     <RelativeLayout
@@ -85,7 +89,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/back"
             android:layout_width="75px"
             android:layout_height="75px"
             android:layout_alignParentBottom="true"
@@ -94,16 +98,17 @@
 
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/logout"
             android:layout_width="75px"
             android:layout_height="75px"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:text="next" />
+            android:onClick="goToDashboard"
+            android:background="@drawable/logout"
 
+            />
 
     </RelativeLayout>
-
 
 
 </RelativeLayout>
