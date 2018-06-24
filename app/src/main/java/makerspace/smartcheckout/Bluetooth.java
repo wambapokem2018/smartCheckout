@@ -1,8 +1,10 @@
 package makerspace.smartcheckout;
 
 import android.Manifest;
+import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,10 +15,14 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.SystemClock;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -57,7 +63,7 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
 
     private final String TAG = MainActivity.class.getSimpleName();
     private Handler mHandler; // Our main handler that will receive callback notifications
-    private ConnectedThread mConnectedThread; // bluetooth background worker thread to send and receive data
+    public static ConnectedThread mConnectedThread; // bluetooth background worker thread to send and receive data
     private BluetoothSocket mBTSocket = null; // bi-directional client-to-client data path
 
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // "random" unique identifier 00001101-0000-1000-8000-00805F9B34FB
@@ -126,11 +132,14 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
 
                 }
 
+                //check if connection with socked was successfully
                 if(msg.what == CONNECTING_STATUS){
-                    if(msg.arg1 == 1)
-                        mBluetoothStatus.setText("Connected to Device: " + (String)(msg.obj));
-                    else
+                    if(msg.arg1 == 1) {
+                        mBluetoothStatus.setText("Connected to Device: " + (String) (msg.obj));
+                    }
+                    else {
                         mBluetoothStatus.setText("Connection Failed");
+                    }
                 }
             }
         };
@@ -213,6 +222,7 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
     private void bluetoothOff(View view){
         mBTAdapter.disable(); // turn off
         mBluetoothStatus.setText("Bluetooth disabled");
+        stopService(new Intent(this, BluetoothService.class));
         Toast.makeText(getApplicationContext(),"Bluetooth turned Off", Toast.LENGTH_SHORT).show();
     }
 
@@ -316,11 +326,13 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
     };
 
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
+        startService(new Intent(this, BluetoothService.class));
         try {
             final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", UUID.class);
             return (BluetoothSocket) m.invoke(device, BTMODULEUUID);
         } catch (Exception e) {
             Log.e(TAG, "Could not create Insecure RFComm Connection",e);
+            stopService(new Intent(this, BluetoothService.class));
         }
         return  device.createRfcommSocketToServiceRecord(BTMODULEUUID);
     }
@@ -339,7 +351,7 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
 
     }
 
-    private class ConnectedThread extends Thread {
+    public class ConnectedThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
