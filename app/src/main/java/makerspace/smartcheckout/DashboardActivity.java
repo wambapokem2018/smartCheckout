@@ -132,7 +132,6 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
     }
 
     @Override
-
     public void processFinish(String output) {
         Log.d(LOG, output);
         if(!output.equals(null)){

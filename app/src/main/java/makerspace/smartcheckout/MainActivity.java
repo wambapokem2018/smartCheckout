@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     EditText etUsername, etPassword;
     Button btnLogin, button2;
 
+    private Bluetooth.ConnectedThread test = Bluetooth.mConnectedThread;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,5 +81,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     public void goToAdvanceMode(View view) {
         Intent myIntent = new Intent(view.getContext(), Bluetooth.class);
         startActivityForResult(myIntent, 0);
+    }
+
+    public void testFunction(View view) {
+        test.write("1");
     }
 }

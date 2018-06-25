@@ -1,28 +1,20 @@
 package makerspace.smartcheckout;
 
 import android.Manifest;
-import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -81,9 +73,7 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
         setContentView(R.layout.bluetooth);
 
         //TODO: optimize layout cause only Landscape Orientation should be allowed
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
-
-        FullScreencall();
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         mBluetoothStatus = (TextView)findViewById(R.id.bluetoothStatus);
         mReadBuffer = (TextView) findViewById(R.id.readBuffer);
@@ -132,14 +122,11 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
 
                 }
 
-                //check if connection with socked was successfully
                 if(msg.what == CONNECTING_STATUS){
-                    if(msg.arg1 == 1) {
-                        mBluetoothStatus.setText("Connected to Device: " + (String) (msg.obj));
-                    }
-                    else {
+                    if(msg.arg1 == 1)
+                        mBluetoothStatus.setText("Connected to Device: " + (String)(msg.obj));
+                    else
                         mBluetoothStatus.setText("Connection Failed");
-                    }
                 }
             }
         };
@@ -222,7 +209,6 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
     private void bluetoothOff(View view){
         mBTAdapter.disable(); // turn off
         mBluetoothStatus.setText("Bluetooth disabled");
-        stopService(new Intent(this, BluetoothService.class));
         Toast.makeText(getApplicationContext(),"Bluetooth turned Off", Toast.LENGTH_SHORT).show();
     }
 
@@ -326,13 +312,11 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
     };
 
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-        startService(new Intent(this, BluetoothService.class));
         try {
             final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", UUID.class);
             return (BluetoothSocket) m.invoke(device, BTMODULEUUID);
         } catch (Exception e) {
             Log.e(TAG, "Could not create Insecure RFComm Connection",e);
-            stopService(new Intent(this, BluetoothService.class));
         }
         return  device.createRfcommSocketToServiceRecord(BTMODULEUUID);
     }
@@ -349,6 +333,11 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
     @Override
     public void processFinish(String s) {
 
+    }
+
+    public void unwindBack(View view) {
+        Intent myIntent = new Intent(view.getContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
     }
 
     public class ConnectedThread extends Thread {
@@ -409,9 +398,6 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
 
         /* Call this from the main activity to shutdown the connection */
         public void cancel() {
-            try {
-                mmSocket.close();
-            } catch (IOException e) { }
         }
     }
 
@@ -428,17 +414,5 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
             completeMessage = "No ID found";
 
         return completeMessage;
-    }
-
-    public void FullScreencall() {
-        if(Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if(Build.VERSION.SDK_INT >= 19) {
-            //for new api versions.
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
     }
 }

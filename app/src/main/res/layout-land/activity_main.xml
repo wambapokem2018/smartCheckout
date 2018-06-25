@@ -103,6 +103,15 @@
             android:onClick="goToDashboard"/>
 
         <Button
+            android:id="@+id/button3"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:background="@drawable/back_gray"
+            android:layout_toRightOf="@+id/advanceMode"
+            android:layout_alignParentBottom="true"
+            android:onClick="testFunction" />
+
+        <Button
             android:id="@+id/advanceMode"
             android:layout_width="100px"
             android:layout_height="100px"
