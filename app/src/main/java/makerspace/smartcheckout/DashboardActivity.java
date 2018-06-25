@@ -44,11 +44,12 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
         createBluetoothHandler();
 
         button.setOnClickListener(new View.OnClickListener(){
+            @Override
             public void onClick(View v){
                 HashMap postData = new HashMap();
                 postData.put("btnLogin", "Login");
                 postData.put("mobile", "android");
-                postData.put("txtBoxname", "0001");
+                postData.put("txtBoxname", "7D96");
 
 
                 PostResponseAsyncTask checkBox =
@@ -56,15 +57,16 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                                 DashboardActivity.this);
                 //loginTask.execute("http://10.0.2.2/client/login.php");
                 //Kevin IP: 10.183.50.32
-                checkBox.execute("http://10.41.17.102/client/login.php");
+                checkBox.execute("http://10.180.34.51/client/login.php");
             }
         });
         button2.setOnClickListener(new View.OnClickListener(){
+
             public void onClick(View v){
                 HashMap postData = new HashMap();
                 postData.put("btnLogin", "Login");
                 postData.put("mobile", "android");
-                postData.put("txtBoxname", "0011");
+                postData.put("txtBoxname", "85A17D96");
 
 
                 PostResponseAsyncTask checkBox =
@@ -72,7 +74,7 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                                 DashboardActivity.this);
                 //loginTask.execute("http://10.0.2.2/client/login.php");
                 //Kevin IP: 10.183.50.32
-                checkBox.execute("http://10.41.17.102/client/login.php");
+                checkBox.execute("http://10.180.34.51/client/login.php");
             }
         });
     }
@@ -134,11 +136,13 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
 
     @Override
     public void processFinish(String output) {
-        Log.d(LOG, output);
-        if(!output.equals(null)){
+
+        if(output.equals("success")){
+
             Toast.makeText(this, "Login Successfully",
                     Toast.LENGTH_LONG).show();
             startActivity(new Intent(DashboardActivity.this, ReturnActivity.class));
+
         }
         else{
             Toast.makeText(this, "Login not Successfully",
