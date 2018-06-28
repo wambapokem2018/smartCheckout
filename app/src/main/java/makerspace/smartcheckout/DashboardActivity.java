@@ -24,11 +24,9 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
 
     final String LOG = "DashboardActivity";
 
-    private Handler mHandler;
-    private final static int MESSAGE_READ = 2; // used in bluetooth handler to identify message update
-    private final static int CONNECTING_STATUS = 3; // used in bluetooth handler to identify message status
-    // private Bluetooth.ConnectedThread this_mConnectedThread = Bluetooth.mConnectedThread; // bluetooth background worker thread to send and receive data
-
+    private String previousMessage = "";
+    private final String TAG = MainActivity.class.getSimpleName();
+    private Bluetooth.ConnectedThread current_connectedThread = Bluetooth.mConnectedThread;
 
 
     @Override
@@ -40,42 +38,10 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
 
         FullScreencall();
 
-        mHandler = new Handler(){
-            public void handleMessage(android.os.Message msg){
-                if(msg.what == MESSAGE_READ){
-                    String readMessage = null;
-                    try {
-                        readMessage = new String((byte[]) msg.obj, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    //mReadBuffer.setText(readMessage);
-                    String arduinoCardInformation = filterMessage(readMessage);
-                    //TODO: check arduinoCardInformation with all entries in DB
-                    String cardID = "D5E07B96";
-                    if(arduinoCardInformation.compareTo(cardID) == 0){
-                        //TODO: give Arduino Board access means turn on green light
-                        //status.setText("TRUE");
-                        System.out.println("Something found == TRUE");
-                      //  this_mConnectedThread.write("9"); //TODO: change into 'access' or something else
-                    } else{
-                        //TODO: deny Arduino Board access means turn on red light
-                        //status.setText("FALSE");
-                        System.out.println("Nothing found == FALSE");
-                   //     this_mConnectedThread.write("deny");
-                    }
-
-                }
-
-                if(msg.what == CONNECTING_STATUS){
-                    if(!(msg.arg1 == 1))
-                        System.out.println("There is no connection cause Connection Fail!");
-                }
-            }
-        };
-
         button = (Button)findViewById(R.id.returnbtn);
         button2 = (Button)findViewById(R.id.borrowbtn);
+
+        createBluetoothHandler();
 
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -124,6 +90,41 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
             completeMessage = "No ID found";
 
         return completeMessage;
+    }
+
+    private void createBluetoothHandler(){
+        Bluetooth.mHandler = new Handler(){
+            public void handleMessage(android.os.Message msg){
+                String readMessage = null;
+                try {
+                    readMessage = new String((byte[]) msg.obj, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                //mReadBuffer.setText(readMessage);
+                String arduinoCardInformation = filterMessage(readMessage);
+                Log.e(TAG, "Hier wäre die Nachricht: " + arduinoCardInformation);
+                //mReadBuffer.setText(arduinoCardInformation);
+                //TODO: check arduinoCardInformation with all entries in DB
+                String cardID = "D5E07B96";
+
+                    if(arduinoCardInformation.compareTo(cardID) == 0 && !arduinoCardInformation.equals(previousMessage)){
+                        //TODO: give Arduino Board access means turn on green light
+                        current_connectedThread.write("9");
+                        //status.setText("TRUE");
+                        //mConnectedThread.write("9"); //TODO: change into 'access' or something else
+                    } else if(arduinoCardInformation.compareTo(cardID) != 0 && !arduinoCardInformation.equals(previousMessage)){
+                        //TODO: deny Arduino Board access means turn on red light
+                        current_connectedThread.write("0");
+                        //status.setText("FALSE");
+                        //mConnectedThread.write("deny");
+                    }
+
+                previousMessage = arduinoCardInformation;
+
+            }
+
+        };
     }
 
     public void loginFunction(View view) {

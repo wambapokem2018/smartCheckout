@@ -65,10 +65,6 @@
         </activity>
 
 
-        <service android:name=".BluetoothService"
-
-        android:enabled="true"/>
-
     </application>
 
 </manifest>

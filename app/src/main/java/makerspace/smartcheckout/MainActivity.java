@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -15,6 +18,7 @@ import android.widget.EditText;
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 
 
@@ -23,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     EditText etUsername, etPassword;
     Button btnLogin, button2;
 
-    private Bluetooth.ConnectedThread test = Bluetooth.mConnectedThread;
 
 
     @Override
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         FullScreencall();
+
 
         //btnLogin = (Button) findViewById(R.id.btnLogin);
         //etUsername = (EditText) findViewById(R.id.etUsername);
@@ -83,7 +87,4 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         startActivityForResult(myIntent, 0);
     }
 
-    public void testFunction(View view) {
-        test.write("1");
-    }
 }

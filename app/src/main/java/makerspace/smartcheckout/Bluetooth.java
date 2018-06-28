@@ -54,7 +54,7 @@ public class Bluetooth extends AppCompatActivity implements AsyncResponse {
     private TextView status;
 
     private final String TAG = MainActivity.class.getSimpleName();
-    private Handler mHandler; // Our main handler that will receive callback notifications
+    public static Handler mHandler; // Our main handler that will receive callback notifications
     public static ConnectedThread mConnectedThread; // bluetooth background worker thread to send and receive data
     private BluetoothSocket mBTSocket = null; // bi-directional client-to-client data path
 
