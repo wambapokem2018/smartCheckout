@@ -60,12 +60,14 @@ public class Return_MissingActivity extends AppCompatActivity  {
                 }
             });
         }
-
+        //navigate to main activity page
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 startActivity(new Intent(Return_MissingActivity.this, MainActivity.class));
             }
         });
+
+        //navigate to return page
         button2.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 startActivity(new Intent(Return_MissingActivity.this, ReturnActivity.class));

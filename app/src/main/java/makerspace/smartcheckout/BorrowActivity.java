@@ -37,21 +37,28 @@ public class BorrowActivity extends AppCompatActivity implements AsyncResponse {
         button3 = (Button) findViewById(R.id.back);
         button4 = (Button) findViewById(R.id.logout);
 
+        //navigate to success page
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(BorrowActivity.this, SuccessActivity.class));
             }
         });
+
+        //navigate to borrow missing page
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(BorrowActivity.this, Borrow_MissingActivity.class));
             }
         });
+
+        //navigate to dashboard page
         button3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(BorrowActivity.this, DashboardActivity.class));
             }
         });
+
+        //navigate to main activity page
         button4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(BorrowActivity.this, MainActivity.class));

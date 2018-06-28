@@ -49,21 +49,28 @@ public class ReturnActivity extends AppCompatActivity implements AsyncResponse{
         button3 = (Button) findViewById(R.id.back);
         button4 = (Button) findViewById(R.id.logout);
 
+        //navigate to success page
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(ReturnActivity.this, SuccessActivity.class));
             }
         });
+
+        //navigate to return-missing page
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(ReturnActivity.this, Return_MissingActivity.class));
             }
         });
+
+        //navigate to dashboard page
         button3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(ReturnActivity.this, DashboardActivity.class));
             }
         });
+
+        //navigate to main activity page
         button4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(ReturnActivity.this, MainActivity.class));

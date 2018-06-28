@@ -52,11 +52,14 @@ public class Borrow_MissingActivity extends AppCompatActivity{
         image1 = (ImageView) findViewById(R.id.makerspaceLogo);
         image2 = (ImageView) findViewById(R.id.makerspaceLogo2);
 
+        //navigate to main activity page
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 startActivity(new Intent(Borrow_MissingActivity.this, MainActivity.class));
             }
         });
+
+        //navigate to borrow page
         button2.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 startActivity(new Intent(Borrow_MissingActivity.this, BorrowActivity.class));

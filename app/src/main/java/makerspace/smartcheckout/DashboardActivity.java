@@ -28,7 +28,6 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
     private final String TAG = MainActivity.class.getSimpleName();
     private Bluetooth.ConnectedThread current_connectedThread = Bluetooth.mConnectedThread;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +37,16 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
 
         FullScreencall();
 
+
         button = (Button)findViewById(R.id.returnbtn);
         button2 = (Button)findViewById(R.id.borrowbtn);
 
         createBluetoothHandler();
 
         button.setOnClickListener(new View.OnClickListener(){
+
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 HashMap postData = new HashMap();
                 postData.put("btnLogin", "Login");
                 postData.put("mobile", "android");
@@ -60,9 +61,9 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                 checkBox.execute("http://10.180.34.51/client/login.php");
             }
         });
-        button2.setOnClickListener(new View.OnClickListener(){
+        button2.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View v){
+            public void onClick(View v) {
                 HashMap postData = new HashMap();
                 postData.put("btnLogin", "Login");
                 postData.put("mobile", "android");
@@ -79,11 +80,11 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
         });
     }
 
-    public String filterMessage(String message){
+    public String filterMessage(String message) {
 
         String completeMessage = message;
 
-        if(completeMessage.charAt(0) == 'C' && completeMessage.charAt(1) == 'a' && completeMessage.charAt(2) == 'r' && completeMessage.charAt(3) == 'd')
+        if (completeMessage.charAt(0) == 'C' && completeMessage.charAt(1) == 'a' && completeMessage.charAt(2) == 'r' && completeMessage.charAt(3) == 'd')
             completeMessage = "" + completeMessage.charAt(7) + completeMessage.charAt(8) + //first HEX ID Part
                     completeMessage.charAt(10) + completeMessage.charAt(11) + //second HEX ID Part
                     completeMessage.charAt(13) + completeMessage.charAt(14) + //third HEX ID Part
@@ -119,7 +120,7 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                         //TODO: deny Arduino Board access means turn on red light
                         current_connectedThread.write("0");
                         //status.setText("FALSE");
-                        //mConnectedThread.write("deny");
+                        //mConnectedThread.write("deny")
                     }
 
                 previousMessage = arduinoCardInformation;
@@ -137,14 +138,13 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
     @Override
     public void processFinish(String output) {
 
-        if(output.equals("success")){
+        if (output.equals("success")) {
 
             Toast.makeText(this, "Login Successfully",
                     Toast.LENGTH_LONG).show();
             startActivity(new Intent(DashboardActivity.this, ReturnActivity.class));
 
-        }
-        else{
+        } else {
             Toast.makeText(this, "Login not Successfully",
                     Toast.LENGTH_LONG).show();
             startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
@@ -172,7 +172,7 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
         }
     }
 */
-
+    //navigate to return page
     public void goToDashboard(View view) {
         Intent myIntent = new Intent(view.getContext(), ReturnActivity.class);
         startActivityForResult(myIntent, 0);
