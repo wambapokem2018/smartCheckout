@@ -2,25 +2,35 @@ package makerspace.smartcheckout;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DashboardActivity extends AppCompatActivity implements AsyncResponse {
 
     Button button, button2;
+    ImageView image;
 
     final String LOG = "DashboardActivity";
 
@@ -40,27 +50,10 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
 
         button = (Button)findViewById(R.id.returnbtn);
         button2 = (Button)findViewById(R.id.borrowbtn);
+        image = (ImageView)findViewById(R.id.makerspaceLogo);
 
         createBluetoothHandler();
 
-        button.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                HashMap postData = new HashMap();
-                postData.put("btnLogin", "Login");
-                postData.put("mobile", "android");
-                postData.put("txtBoxname", "7D96");
-
-
-                PostResponseAsyncTask checkBox =
-                        new PostResponseAsyncTask(DashboardActivity.this, postData,
-                                DashboardActivity.this);
-                //loginTask.execute("http://10.0.2.2/client/login.php");
-                //Kevin IP: 10.183.50.32
-                checkBox.execute("http://10.180.34.51/client/login.php");
-            }
-        });
         button2.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -75,7 +68,8 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                                 DashboardActivity.this);
                 //loginTask.execute("http://10.0.2.2/client/login.php");
                 //Kevin IP: 10.183.50.32
-                checkBox.execute("http://10.180.34.51/client/login.php");
+                checkBox.execute("http://192.168.178.32/client/login.php");
+                //Toast.makeText(DashboardActivity.this, "Connected with DB", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -109,6 +103,7 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                 Log.e(TAG, "Hier wäre die Nachricht: " + arduinoCardInformation);
                 //mReadBuffer.setText(arduinoCardInformation);
                 //TODO: check arduinoCardInformation with all entries in DB
+                //checkDatabase(arduinoCardInformation);
                 String cardID = "D5E07B96";
 
                     if(arduinoCardInformation.compareTo(cardID) == 0 && !arduinoCardInformation.equals(previousMessage)){
@@ -130,14 +125,48 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
         };
     }
 
-    public void loginFunction(View view) {
+    private void checkDatabase(String currentID){
+
+        HashMap postData = new HashMap();
+        postData.put("btnLogin", "Login");
+        postData.put("mobile", "android");
+        postData.put("txtBoxname", "85A17D96");
 
 
+        PostResponseAsyncTask checkBox =
+                new PostResponseAsyncTask(DashboardActivity.this, postData,
+                        DashboardActivity.this);
+        //loginTask.execute("http://10.0.2.2/client/login.php");
+        //Kevin IP: 10.183.50.32
+        checkBox.execute("http://192.168.178.32/client/login.php");
     }
 
     @Override
     public void processFinish(String output) {
 
+        //Toast.makeText(this, "hier " + output, Toast.LENGTH_SHORT).show();
+        JSONObject jsonObj = null;
+        String id = "";
+        String name = "";
+        String encodedImage = "";
+        try {
+            jsonObj = new JSONObject(output);
+            id = jsonObj.getString("BoxID");
+            name = jsonObj.getString("BoxName");
+            encodedImage = jsonObj.getString("BoxImage");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        Toast.makeText(this, "hier " + id + " und natürlich: " + name, Toast.LENGTH_SHORT).show();
+        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        image.setImageBitmap(decodedByte);
+        //image.setImageBitmap(decodedByte);
+        Log.e(TAG, "hier Infor: " + id);
+        /*
         if (output.equals("success")) {
 
             Toast.makeText(this, "Login Successfully",
@@ -148,7 +177,7 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
             Toast.makeText(this, "Login not Successfully",
                     Toast.LENGTH_LONG).show();
             startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
-        }
+        }*/
     }
 
     /* public void processFinish(String s) {

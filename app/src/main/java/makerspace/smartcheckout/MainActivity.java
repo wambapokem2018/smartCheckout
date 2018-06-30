@@ -39,11 +39,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
         FullScreencall();
 
-
-        //btnLogin = (Button) findViewById(R.id.btnLogin);
-        //etUsername = (EditText) findViewById(R.id.etUsername);
-
-
     }
 
     @Override
