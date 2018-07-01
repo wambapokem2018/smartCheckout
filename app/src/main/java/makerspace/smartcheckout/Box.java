@@ -1,10 +1,13 @@
 package makerspace.smartcheckout;
 
+import android.graphics.Bitmap;
+
 public class Box {
 
 
     private String BoxName;
     private String BoxImage;
+    private String BoxID;
 
 
     public String getBoxName() {
@@ -23,9 +26,18 @@ public class Box {
         BoxImage = boxImage;
     }
 
-    public Box(String Name, String Image){
+    public Box(String ID, String Name, String Image){
+        this.BoxID = ID;
         this.BoxImage = Image;
         this.BoxName = Name;
 
+    }
+
+    public String getBoxID() {
+        return BoxID;
+    }
+
+    public void setBoxID(String boxID) {
+        BoxID = boxID;
     }
 }

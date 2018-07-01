@@ -17,11 +17,10 @@
         android:gravity="center" />
 
     <ImageView
-        android:id="@+id/makerspaceLogo"
+        android:id="@+id/boxImage"
         android:layout_width="500px"
         android:layout_height="150px"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/makerspace"
         android:layout_below="@+id/welcomeText" />
 
     <RelativeLayout

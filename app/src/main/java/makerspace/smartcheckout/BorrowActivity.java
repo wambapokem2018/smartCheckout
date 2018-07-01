@@ -2,8 +2,11 @@ package makerspace.smartcheckout;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +22,10 @@ import java.util.ArrayList;
 public class BorrowActivity extends AppCompatActivity implements AsyncResponse {
 
     Button button, button2, button3, button4;
+    ImageView boxImage;
     final String LOG = "BorrowActivity";
     private ArrayList<Box> boxes;
+    private Box box = DashboardActivity.currentBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,11 @@ public class BorrowActivity extends AppCompatActivity implements AsyncResponse {
         button2 = (Button) findViewById(R.id.showObject);
         button3 = (Button) findViewById(R.id.back);
         button4 = (Button) findViewById(R.id.logout);
+        boxImage = (ImageView) findViewById(R.id.makerspaceLogo);
+
+        byte[] decodedString = Base64.decode(box.getBoxImage(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        boxImage.setImageBitmap(decodedByte);
 
         //navigate to success page
         button.setOnClickListener(new View.OnClickListener() {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
@@ -37,7 +38,12 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
     private String previousMessage = "";
     private final String TAG = MainActivity.class.getSimpleName();
     private Bluetooth.ConnectedThread current_connectedThread = Bluetooth.mConnectedThread;
+    private boolean sendMessageThread = false;
+    private boolean readyToReceive = true;
 
+    public static Box currentBox;
+
+    private String NO_ID = "No ID found";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,19 +63,8 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
         button2.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                HashMap postData = new HashMap();
-                postData.put("btnLogin", "Login");
-                postData.put("mobile", "android");
-                postData.put("txtBoxname", "85A17D96");
-
-
-                PostResponseAsyncTask checkBox =
-                        new PostResponseAsyncTask(DashboardActivity.this, postData,
-                                DashboardActivity.this);
-                //loginTask.execute("http://10.0.2.2/client/login.php");
-                //Kevin IP: 10.183.50.32
-                checkBox.execute("http://192.168.178.32/client/login.php");
-                //Toast.makeText(DashboardActivity.this, "Connected with DB", Toast.LENGTH_SHORT).show();
+                checkDatabase("85A17D96");
+                startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
             }
         });
     }
@@ -84,7 +79,7 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                     completeMessage.charAt(13) + completeMessage.charAt(14) + //third HEX ID Part
                     completeMessage.charAt(16) + completeMessage.charAt(17); //fourth HEX ID Part
         else
-            completeMessage = "No ID found";
+            completeMessage = NO_ID;
 
         return completeMessage;
     }
@@ -98,28 +93,19 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                //mReadBuffer.setText(readMessage);
-                String arduinoCardInformation = filterMessage(readMessage);
-                Log.e(TAG, "Hier wäre die Nachricht: " + arduinoCardInformation);
-                //mReadBuffer.setText(arduinoCardInformation);
-                //TODO: check arduinoCardInformation with all entries in DB
-                //checkDatabase(arduinoCardInformation);
-                String cardID = "D5E07B96";
 
-                    if(arduinoCardInformation.compareTo(cardID) == 0 && !arduinoCardInformation.equals(previousMessage)){
-                        //TODO: give Arduino Board access means turn on green light
-                        current_connectedThread.write("9");
-                        //status.setText("TRUE");
-                        //mConnectedThread.write("9"); //TODO: change into 'access' or something else
-                    } else if(arduinoCardInformation.compareTo(cardID) != 0 && !arduinoCardInformation.equals(previousMessage)){
-                        //TODO: deny Arduino Board access means turn on red light
-                        current_connectedThread.write("0");
-                        //status.setText("FALSE");
-                        //mConnectedThread.write("deny")
+                String arduinoCardInformation = NO_ID;
+
+                if(!sendMessageThread && readyToReceive){
+                    arduinoCardInformation = filterMessage(readMessage);
+                    if(!arduinoCardInformation.equals(previousMessage) && !arduinoCardInformation.equals(NO_ID)){
+                    Log.e(TAG, "New Tag ID found!");
+                    sendMessageThread = true;
+                    readyToReceive = false;
+                    checkDatabase(arduinoCardInformation);
                     }
-
-                previousMessage = arduinoCardInformation;
-
+                    previousMessage = arduinoCardInformation;
+                }
             }
 
         };
@@ -130,21 +116,19 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
         HashMap postData = new HashMap();
         postData.put("btnLogin", "Login");
         postData.put("mobile", "android");
-        postData.put("txtBoxname", "85A17D96");
+        postData.put("txtBoxname", currentID);
 
 
         PostResponseAsyncTask checkBox =
                 new PostResponseAsyncTask(DashboardActivity.this, postData,
                         DashboardActivity.this);
-        //loginTask.execute("http://10.0.2.2/client/login.php");
-        //Kevin IP: 10.183.50.32
-        checkBox.execute("http://192.168.178.32/client/login.php");
+        //TODO: change IP Adresse or Database Connection
+        checkBox.execute("http://192.168.178.32/client/scanBox.php");
     }
 
     @Override
     public void processFinish(String output) {
 
-        //Toast.makeText(this, "hier " + output, Toast.LENGTH_SHORT).show();
         JSONObject jsonObj = null;
         String id = "";
         String name = "";
@@ -154,30 +138,36 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
             id = jsonObj.getString("BoxID");
             name = jsonObj.getString("BoxName");
             encodedImage = jsonObj.getString("BoxImage");
+            //TODO: delete here the box
+            currentBox = new Box(id, name, encodedImage);
+            if(current_connectedThread != null && sendMessageThread) {
+                Log.e(TAG, "Send to Arduino...");
+                sendMessageThread = false;
+                current_connectedThread.write("1");
+                current_connectedThread.write("9");
+                int test = 0;
+                //TODO check if Box is currently borrowed or now
+                if(test == 0) { //Box is borrowed
+                    currentBox = new Box(id, name, encodedImage);
+                    startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
+                }
+                else if (test == 1) //Box need to be returned
+                    startActivity(new Intent(DashboardActivity.this, ReturnActivity.class));
+                readyToReceive = true;
 
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
-        Toast.makeText(this, "hier " + id + " und natürlich: " + name, Toast.LENGTH_SHORT).show();
-        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        image.setImageBitmap(decodedByte);
-        //image.setImageBitmap(decodedByte);
-        Log.e(TAG, "hier Infor: " + id);
-        /*
-        if (output.equals("success")) {
-
-            Toast.makeText(this, "Login Successfully",
-                    Toast.LENGTH_LONG).show();
-            startActivity(new Intent(DashboardActivity.this, ReturnActivity.class));
-
-        } else {
-            Toast.makeText(this, "Login not Successfully",
-                    Toast.LENGTH_LONG).show();
-            startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
-        }*/
+        if(id.equals("") && current_connectedThread != null && sendMessageThread) {
+            sendMessageThread = false;
+            Log.e(TAG, "Send to Arduino...");
+            current_connectedThread.write("0");
+            current_connectedThread.write("9");
+            readyToReceive = true;
+            //current_connectedThread.write("");
+        }
     }
 
     /* public void processFinish(String s) {
@@ -228,4 +218,5 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
         startActivityForResult(myIntent, 0);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
+    
 }
