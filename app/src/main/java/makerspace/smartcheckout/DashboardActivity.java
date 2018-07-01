@@ -1,9 +1,13 @@
 package makerspace.smartcheckout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,7 +28,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -40,8 +53,11 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
     private Bluetooth.ConnectedThread current_connectedThread = Bluetooth.mConnectedThread;
     private boolean sendMessageThread = false;
     private boolean readyToReceive = true;
+    Bitmap decodedByte = null;
+    String decodedImage = "";
+    FileOutputStream stream;
 
-    public static Box currentBox;
+    public static Box currentBox = new Box("", "", null);
 
     private String NO_ID = "No ID found";
     @Override
@@ -63,8 +79,7 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
         button2.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                checkDatabase("85A17D96");
-                startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
+                checkDatabase("76C5C33B");
             }
         });
     }
@@ -139,7 +154,14 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
             name = jsonObj.getString("BoxName");
             encodedImage = jsonObj.getString("BoxImage");
             //TODO: delete here the box
-            currentBox = new Box(id, name, encodedImage);
+            currentBox.setBoxID(id);
+            currentBox.setBoxName(name);
+            //decodedImage = encodedImage;
+            //currentBox.setBoxImage(encodedImage);
+
+
+            new ImageAsyncTask().execute(encodedImage);
+
             if(current_connectedThread != null && sendMessageThread) {
                 Log.e(TAG, "Send to Arduino...");
                 sendMessageThread = false;
@@ -148,7 +170,7 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
                 int test = 0;
                 //TODO check if Box is currently borrowed or now
                 if(test == 0) { //Box is borrowed
-                    currentBox = new Box(id, name, encodedImage);
+                    //currentBox = new Box(id, name, encodedImage);
                     startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
                 }
                 else if (test == 1) //Box need to be returned
@@ -191,6 +213,11 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
         }
     }
 */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     //navigate to return page
     public void goToDashboard(View view) {
         Intent myIntent = new Intent(view.getContext(), ReturnActivity.class);
@@ -218,5 +245,24 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
         startActivityForResult(myIntent, 0);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
-    
+
+    private class ImageAsyncTask extends AsyncTask<String, Integer, Double> {
+
+        @Override
+        protected Double doInBackground(String... strings) {
+            Log.e(TAG, "start loading image..." + strings[0]);
+            byte[] decodedString = Base64.decode(strings[0], Base64.DEFAULT);
+            decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            return null;
+        }
+
+        @Override
+
+        protected void onPostExecute(Double result) {
+            currentBox.setBoxImage(decodedByte);
+            startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
+            //boxImage.setImageResource(R.drawable.back_gray);
+            //boxImage.setImageResource(R.id.backButton);
+        }
+    }
 }

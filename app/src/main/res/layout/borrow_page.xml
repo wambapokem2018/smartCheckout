@@ -16,12 +16,21 @@
         android:textSize="30dp"
         android:gravity="center" />
 
+    <TextView
+        android:id="@+id/boxName"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:text="Your Box"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_below="@+id/welcomeText" />
+
     <ImageView
         android:id="@+id/boxImage"
         android:layout_width="500px"
         android:layout_height="150px"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/welcomeText" />
+        android:layout_below="@+id/boxName" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,6 +44,7 @@
             android:text="All is right"
             android:id="@+id/goToFinish"
             android:layout_alignParentLeft="true"
+            android:background="@color/acceptGreen"
             android:layout_marginTop="280dp"
             android:layout_marginLeft="80dp"
             android:layout_toStartOf="@+id/discover"
@@ -47,6 +57,7 @@
             android:text="Report missing object"
             android:layout_alignParentRight="true"
             android:layout_marginRight="80dp"
+            android:background="@color/denyRed"
             android:id="@+id/showObject"
             android:layout_marginTop="280dp"
             android:layout_toStartOf="@+id/discover"

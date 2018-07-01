@@ -6,7 +6,7 @@ public class Box {
 
 
     private String BoxName;
-    private String BoxImage;
+    private Bitmap BoxImage;
     private String BoxID;
 
 
@@ -18,19 +18,18 @@ public class Box {
         BoxName = boxName;
     }
 
-    public String getBoxImage() {
+    public Bitmap getBoxImage() {
         return BoxImage;
     }
 
-    public void setBoxImage(String boxImage) {
+    public void setBoxImage(Bitmap boxImage) {
         BoxImage = boxImage;
     }
 
-    public Box(String ID, String Name, String Image){
+    public Box(String ID, String Name, Bitmap Image){
         this.BoxID = ID;
         this.BoxImage = Image;
         this.BoxName = Name;
-
     }
 
     public String getBoxID() {
