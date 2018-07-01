@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.http.HttpResponseCache;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.LoginFilter;
 import android.util.Log;
@@ -32,6 +33,7 @@ import java.util.HashMap;
 public class ReturnActivity extends AppCompatActivity implements AsyncResponse{
     Button button, button2, button3, button4;
     final String LOG = "ReturnActivity";
+    private final String TAG = MainActivity.class.getSimpleName();
 
 
     @Override

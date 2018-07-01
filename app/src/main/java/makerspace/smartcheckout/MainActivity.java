@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     EditText etUsername, etPassword;
     Button btnLogin, button2;
 
+    public static User currentUser = new User(15, "Franziska", "Frankenstein",
+            "Valleystraße 17, 81371 München", "FrankensteinchenFran@googlemail.com", 1);
+
 
 
     @Override

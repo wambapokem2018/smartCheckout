@@ -129,21 +129,6 @@ public class BorrowActivity extends AppCompatActivity implements AsyncResponse {
 
     }
 
-    private void getBoxImageDatabase(String currentID){
-
-        HashMap postData = new HashMap();
-        postData.put("btnLogin", "Login");
-        postData.put("mobile", "android");
-        postData.put("txtBoxname", currentID);
-
-
-        PostResponseAsyncTask checkBox =
-                new PostResponseAsyncTask(BorrowActivity.this, postData,
-                        BorrowActivity.this);
-        //TODO: change IP Adresse or Database Connection
-        checkBox.execute("http://192.168.178.32/client/imageBox.php");
-    }
-
 
     @Override
     public void processFinish(String s) {

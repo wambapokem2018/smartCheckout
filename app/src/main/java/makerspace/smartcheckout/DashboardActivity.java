@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kosalgeek.genasync12.AsyncResponse;
@@ -45,6 +46,8 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
 
     Button button, button2;
     ImageView image;
+    TextView infoText;
+
 
     final String LOG = "DashboardActivity";
 
@@ -60,6 +63,9 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
     public static Box currentBox = new Box("", "", null);
 
     private String NO_ID = "No ID found";
+    public static int RENT_STATE = 0; //0 = borrow process, 1 = rent process
+    private boolean check_RentState = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +79,9 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
         button = (Button)findViewById(R.id.returnbtn);
         button2 = (Button)findViewById(R.id.borrowbtn);
         image = (ImageView)findViewById(R.id.makerspaceLogo);
+        infoText = (TextView) findViewById(R.id.signText);
+        String infoTest = (String) infoText.getText();
+        infoText.setText(infoTest + " " +  MainActivity.currentUser.getName() + " " + MainActivity.currentUser.getSurname());
 
         createBluetoothHandler();
 
@@ -144,51 +153,63 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
     @Override
     public void processFinish(String output) {
 
-        JSONObject jsonObj = null;
-        String id = "";
-        String name = "";
-        String encodedImage = "";
-        try {
-            jsonObj = new JSONObject(output);
-            id = jsonObj.getString("BoxID");
-            name = jsonObj.getString("BoxName");
-            encodedImage = jsonObj.getString("BoxImage");
-            //TODO: delete here the box
-            currentBox.setBoxID(id);
-            currentBox.setBoxName(name);
-            //decodedImage = encodedImage;
-            //currentBox.setBoxImage(encodedImage);
-
-
-            new ImageAsyncTask().execute(encodedImage);
-
-            if(current_connectedThread != null && sendMessageThread) {
-                Log.e(TAG, "Send to Arduino...");
-                sendMessageThread = false;
-                current_connectedThread.write("1");
-                current_connectedThread.write("9");
-                int test = 0;
-                //TODO check if Box is currently borrowed or now
-                if(test == 0) { //Box is borrowed
-                    //currentBox = new Box(id, name, encodedImage);
-                    startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
-                }
-                else if (test == 1) //Box need to be returned
+        if(check_RentState){
+            check_RentState = false;
+            JSONObject jsonObj = null;
+            String returnDate = "";
+            String borrowDate = "";
+            try {
+                    jsonObj = new JSONObject(output);
+                    returnDate = jsonObj.getString("ReturnTime");
+                    Log.e(TAG, "User want to return the Box.");
+                    RENT_STATE = 1;
                     startActivity(new Intent(DashboardActivity.this, ReturnActivity.class));
-                readyToReceive = true;
-
+            } catch (JSONException e) {
+            Log.e(TAG, "User want to borrow the Box.");
+            RENT_STATE = 0;
+            startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        if(id.equals("") && current_connectedThread != null && sendMessageThread) {
-            sendMessageThread = false;
-            Log.e(TAG, "Send to Arduino...");
-            current_connectedThread.write("0");
-            current_connectedThread.write("9");
-            readyToReceive = true;
-            //current_connectedThread.write("");
+        } else {
+            JSONObject jsonObj = null;
+            String id = "";
+            String name = "";
+            String encodedImage = "";
+            try {
+                jsonObj = new JSONObject(output);
+                id = jsonObj.getString("BoxID");
+                name = jsonObj.getString("BoxName");
+                encodedImage = jsonObj.getString("BoxImage");
+
+                currentBox.setBoxID(id);
+                currentBox.setBoxName(name);
+                //decodedImage = encodedImage;
+                //currentBox.setBoxImage(encodedImage);
+
+
+                new ImageAsyncTask().execute(encodedImage);
+
+                if (current_connectedThread != null && sendMessageThread) {
+                    Log.e(TAG, "Send to Arduino...");
+                    sendMessageThread = false;
+                    current_connectedThread.write("1");
+                    current_connectedThread.write("9");
+                    readyToReceive = true;
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (id.equals("") && current_connectedThread != null && sendMessageThread) {
+                sendMessageThread = false;
+                Log.e(TAG, "Send to Arduino...");
+                current_connectedThread.write("0");
+                current_connectedThread.write("9");
+                readyToReceive = true;
+                //current_connectedThread.write("");
+            }
         }
     }
 
@@ -260,9 +281,20 @@ public class DashboardActivity extends AppCompatActivity implements AsyncRespons
 
         protected void onPostExecute(Double result) {
             currentBox.setBoxImage(decodedByte);
-            startActivity(new Intent(DashboardActivity.this, BorrowActivity.class));
-            //boxImage.setImageResource(R.drawable.back_gray);
-            //boxImage.setImageResource(R.id.backButton);
+            checkRentingProcess();
         }
+    }
+
+    private void checkRentingProcess(){
+        check_RentState = true;
+        HashMap postData = new HashMap();
+        postData.put("userID", String.valueOf(MainActivity.currentUser.getID()));
+        postData.put("boxID", currentBox.getBoxID());
+
+        PostResponseAsyncTask checkBox =
+                new PostResponseAsyncTask(DashboardActivity.this, postData,
+                        DashboardActivity.this);
+        //TODO: change IP Adresse or Database Connection
+        checkBox.execute("http://192.168.178.32/client/rentProcess.php");
     }
 }
